@@ -1,4 +1,4 @@
-//let button = document.getElementById("btn");
+let img = document.getElementById("cat-img");
 let list = document.getElementById("list-container");
 let clickTimes = document.getElementById("timesClicked");
 clickTimes.innerHTML = "0";
@@ -19,8 +19,8 @@ let buttons = [];
 let imgs = [];
 
 function setCat(c,num){
+  img.src = imgs[num];
   catName.innerHTML = c.kittyName;
-  //button.innerHTML = "Click for Kitty "+c.catNumber+"!";
   clickTimes.innerHTML=c.timesClicked;
   buttons[prevCatEnt].style.display = "none";
   buttons[num].style.display = "block";
@@ -46,7 +46,6 @@ for (let i = 1; i < numCats.length+1; i++) {
   let text = document.createTextNode("Click for Kitty "+i+"!");
   entry.appendChild(text);
   entry.addEventListener('click',function(){
-    //MAY NEED TO CHANGE TO I-1
     cats[i-1].timesClicked++;
     clickTimes.innerHTML=cats[i-1].timesClicked;
   },false)
@@ -56,6 +55,6 @@ for (let i = 1; i < numCats.length+1; i++) {
   //create the list entry
   createListEnt(i);
   //create img entry
-  //img.push("<img src='img/cat"+i+".jpg'");
+  imgs.push("img/cat"+i+".jpg");
 }
 prevCatEnt = setCat(cats[0],0);
