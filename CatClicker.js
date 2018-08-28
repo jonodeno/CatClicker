@@ -18,7 +18,6 @@ const octopus = {
   //function to change to the newest cat
   setCat: function(num){
     return function(){
-      console.log(prevCatEnt);
       catView.render(num);
     }
   },
@@ -27,7 +26,6 @@ const octopus = {
     return function(){
       model.cats[i].timesClicked++;
       catView.render(i);
-      //catView.updateTimesClicked(model.cats[i].timesClicked);
     }
   },
   init: function(){
@@ -35,7 +33,6 @@ const octopus = {
     for (var i = 0; i < totalCats; i++) {
       model.cats.push(new Cat(i,"img/cat"+(i+1)+".jpg"))
     };
-    console.log(model.cats);
 
     //initialize list of buttons
     listView.init();
@@ -99,7 +96,6 @@ let catView = {
       entry.style.display = "none";
       this.buttonDiv.appendChild(entry);
       this.buttons.push(entry);
-      console.log(this.buttons);
     }
 
     this.clickTimes.innerHTML = "0";
