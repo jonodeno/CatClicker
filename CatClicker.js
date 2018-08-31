@@ -15,6 +15,10 @@ let model = {
 
 //octopus, interface between data and view
 const octopus = {
+  //function to get a cat
+  getCat: function(num){
+    return model.cats[num];
+  },
   //function to change to the newest cat
   setCat: function(num){
     return function(){
@@ -38,6 +42,8 @@ const octopus = {
     listView.init();
     //initialize cat img area
     catView.init();
+    //initialize admin view area
+    adminView.init();
   }
 };
 
@@ -103,51 +109,78 @@ let catView = {
   }
 }
 
+//view for admin area
+let adminView = {
+  adminDiv: document.getElementById("admin-space"),
+  rendered: 0,
+  createInputs: function(){
+
+  },
+
+  render: function(){
+    let adminButton = document.createElement("BUTTON");
+    let text = document.createTextNode("ADMIN");
+    adminButton.appendChild(text);
+    adminButton.addEventListener('click',function(){
+      if (adminView.rendered === 0) {
+        //get current cat to fill in data
+        let currCat = octopus.getCat(prevCatEnt);
+        //add inputs to view
+        //name text
+        let n = document.createElement("P");
+        n.appendChild(document.createTextNode("Name:"));
+        adminView.adminDiv.appendChild(n);
+        //name
+        let nameInp = document.createElement("INPUT");
+        nameInp.setAttribute("type", "text");
+        nameInp.value = currCat.kittyName;
+        nameInp.label = "name";
+        adminView.adminDiv.appendChild(nameInp);
+        //url text
+        let i = document.createElement("P");
+        i.appendChild(document.createTextNode("Image URL:"));
+        adminView.adminDiv.appendChild(i);
+        //imgURL
+        let urlInp = document.createElement("INPUT");
+        urlInp.setAttribute("type", "text");
+        urlInp.value = currCat.imgURL;
+        adminView.adminDiv.appendChild(urlInp);
+        //clicks text
+        let c = document.createElement("P");
+        c.appendChild(document.createTextNode("Number of Times Clicked:"));
+        adminView.adminDiv.appendChild(c);
+        //noClicks
+        let clickNumInp = document.createElement("INPUT");
+        clickNumInp.setAttribute("type", "text");
+        clickNumInp.value = currCat.timesClicked;
+        clickNumInp.style.display = "block";
+        adminView.adminDiv.appendChild(clickNumInp);
+        //save button
+        let entry = document.createElement("BUTTON");
+        let text = document.createTextNode("Save");
+        entry.appendChild(text);
+        entry.addEventListener('click',function(){
+          //update all fields for the cat with data from inputs
+        },false)
+        //entry.style.display = "inline";
+        adminView.adminDiv.appendChild(entry);
+        //cancel button
+        entry = document.createElement("BUTTON");
+        text = document.createTextNode("Cancel");
+        entry.appendChild(text);
+        entry.addEventListener('click',function(){
+          //make admin area dissappear
+        },false)
+        //entry.style.display = "block";
+        adminView.adminDiv.appendChild(entry);
+
+        adminView.rendered = 1;
+      }
+    },false);
+    this.adminDiv.appendChild(adminButton);
+  },
+  init: function(){
+    this.render();
+  }
+};
 octopus.init();
-/*
-const numCats = [1,2,3,4,5];
-let cats = [];
-let buttons = [];
-let imgs = [];
-
-function setCat(c,num){
-  img.src = imgs[num];
-  catName.innerHTML = c.kittyName;
-  clickTimes.innerHTML=c.timesClicked;
-  buttons[prevCatEnt].style.display = "none";
-  buttons[num].style.display = "block";
-  return num;
-}
-
-function createListEnt(num){
-  let entry = document.createElement("BUTTON");
-  let text = document.createTextNode("Kitty"+num);
-  entry.appendChild(text);
-  entry.addEventListener('click',function(){
-    prevCatEnt = setCat(cats[num-1],num-1);
-  },false)
-  list.appendChild(entry);
-}
-
-//initialize the list
-for (let i = 1; i < numCats.length+1; i++) {
-  let tempCat = new Cat(i);
-  cats.push(tempCat);
-  //create the button
-  let entry = document.createElement("BUTTON");
-  let text = document.createTextNode("Click for Kitty "+i+"!");
-  entry.appendChild(text);
-  entry.addEventListener('click',function(){
-    cats[i-1].timesClicked++;
-    clickTimes.innerHTML=cats[i-1].timesClicked;
-  },false)
-  entry.style.display = "none";
-  buttonDiv.appendChild(entry);
-  buttons.push(entry);
-  //create the list entry
-  createListEnt(i);
-  //create img entry
-  imgs.push("img/cat"+i+".jpg");
-}
-prevCatEnt = setCat(cats[0],0);
-*/
